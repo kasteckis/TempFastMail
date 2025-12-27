@@ -1,5 +1,15 @@
+networks:
+  traefik:
+    external: true
+
 services:
   php:
     build:
       context: .
       target: frankenphp_prod
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tempfastmail.rule=Host(`tempfastmail.com`)"
+      - "traefik.http.routers.tempfastmail.entrypoints=web"
+    networks:
+      - traefik
