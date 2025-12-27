@@ -9,6 +9,33 @@ services:
     ports:
       - "80:80"
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: tempfastmail_phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "81:80"
+
+  mysql:
+    container_name: tempfastmail_mysql
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: project
+      MYSQL_USER: project
+      MYSQL_PASSWORD: project
+    volumes:
+      - volume_database_tempfastmail:/var/lib/mysql
+
 volumes:
   caddy_data:
   caddy_config:
+  volume_database_tempfastmail:

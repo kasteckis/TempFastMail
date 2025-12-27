@@ -27,6 +27,7 @@ RUN set -eux; \
 		@composer \
 		apcu \
 		intl \
+        pdo_mysql \
 		opcache \
 		zip \
 	;
