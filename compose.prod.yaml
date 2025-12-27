@@ -4,6 +4,7 @@ networks:
 
 services:
   php:
+    container_name: tempfastmail_php
     build:
       context: .
       target: frankenphp_prod

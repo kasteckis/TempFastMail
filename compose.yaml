@@ -1,5 +1,6 @@
 services:
   php:
+    container_name: tempfastmail_php
     image: ${IMAGES_PREFIX:-}app-php
     restart: unless-stopped
     volumes:
