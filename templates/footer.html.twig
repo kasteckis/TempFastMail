@@ -1,0 +1,30 @@
+<footer class="footer">
+    <div class="container">
+        <div class="is-flex is-flex-direction-column is-align-items-center is-justify-content-center
+                is-flex-direction-row-tablet is-justify-content-space-between-tablet">
+
+            <div class="has-text-weight-bold mb-3 mb-0-tablet">
+                TEMP FAST MAIL SENDER
+            </div>
+
+            <nav aria-label="Apačia" class="mb-3 mb-0-tablet">
+                <ul class="is-flex is-flex-wrap-wrap is-justify-content-center is-align-items-center
+                   is-justify-content-flex-start-tablet">
+                    <li class="mx-2"><a href="/">Pagrindinis</a></li>
+                    <li class="is-hidden-mobile">•</li>
+                    <li class="mx-2"><a href="/naujienos">Naujienos</a></li>
+                    <li class="is-hidden-mobile">•</li>
+                    <li class="mx-2"><a href="/kontaktai">Kontaktai</a></li>
+                    {% if app.user %}
+                        <li class="is-hidden-mobile">•</li>
+                        <li class="mx-2"><a href="/paskyra">Paskyra</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <div class="has-text-centered has-text-right-tablet">
+                <small>Visos teisės saugomos © TEMP FAST MAIL SENDER {{ 'now'|date('Y') }}</small>
+            </div>
+        </div>
+    </div>
+</footer>

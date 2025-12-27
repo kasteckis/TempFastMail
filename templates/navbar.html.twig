@@ -1,0 +1,62 @@
+<nav class="navbar is-white" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item has-text-weight-bold is-size-5" href="/">TEMP FAST MAIL SENDER</a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+
+        <div id="mainNavbar" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item is-active" href="/">Pagrindinis</a>
+                <a class="navbar-item" href="/naujienos">Naujienos</a>
+                <a class="navbar-item" href="/kontaktai">Kontaktai</a>
+            </div>
+            {% if app.user %}
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="button is-warning is-light" href="/admin">
+                                    <strong>Admin</strong>
+                                </a>
+                            {% endif %}
+                            <a class="button is-primary is-light" href="/paskyra">
+                                <strong>Paskyra</strong>
+                            </a>
+                            <a class="button is-danger is-light" href="{{ path('app_logout') }}">
+                                <strong>Atsijungti</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary is-light" href="/prisijungti">
+                                <strong>Prisijungti</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<script>
+    var burgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    burgers.forEach(function (el) {
+        el.addEventListener('click', function () {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+        });
+    });
+</script>
