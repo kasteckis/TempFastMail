@@ -44,6 +44,9 @@ class ReceivedEmail
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'receivedEmails')]
+    private ?TemporaryEmailBox $temporaryEmailBox = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -187,5 +190,26 @@ class ReceivedEmail
         $this->bccMultiple = $bccMultiple;
 
         return $this;
+    }
+
+    public function getTemporaryEmailBox(): ?TemporaryEmailBox
+    {
+        return $this->temporaryEmailBox;
+    }
+
+    public function setTemporaryEmailBox(?TemporaryEmailBox $temporaryEmailBox): static
+    {
+        $this->temporaryEmailBox = $temporaryEmailBox;
+
+        return $this;
+    }
+
+    public function getHasAssignedTemporaryEmailBox(): string
+    {
+        if ($this->temporaryEmailBox === null) {
+            return 'No';
+        }
+
+        return 'Yes';
     }
 }

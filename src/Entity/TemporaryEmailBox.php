@@ -15,7 +15,7 @@ class TemporaryEmailBox
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -26,6 +26,17 @@ class TemporaryEmailBox
 
     #[ORM\ManyToOne(inversedBy: 'temporaryEmailBoxes')]
     private ?User $owner = null;
+
+    /**
+     * @var Collection<int, ReceivedEmail>
+     */
+    #[ORM\OneToMany(targetEntity: ReceivedEmail::class, mappedBy: 'temporaryEmailBox')]
+    private Collection $receivedEmails;
+
+    public function __construct()
+    {
+        $this->receivedEmails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,6 +87,36 @@ class TemporaryEmailBox
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReceivedEmail>
+     */
+    public function getReceivedEmails(): Collection
+    {
+        return $this->receivedEmails;
+    }
+
+    public function addReceivedEmail(ReceivedEmail $receivedEmail): static
+    {
+        if (!$this->receivedEmails->contains($receivedEmail)) {
+            $this->receivedEmails->add($receivedEmail);
+            $receivedEmail->setTemporaryEmailBox($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedEmail(ReceivedEmail $receivedEmail): static
+    {
+        if ($this->receivedEmails->removeElement($receivedEmail)) {
+            // set the owning side to null (unless already changed)
+            if ($receivedEmail->getTemporaryEmailBox() === $this) {
+                $receivedEmail->setTemporaryEmailBox(null);
+            }
+        }
 
         return $this;
     }
