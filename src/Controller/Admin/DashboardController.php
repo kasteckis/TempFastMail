@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Domain;
 use App\Entity\ReceivedEmail;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
@@ -32,6 +33,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fas fa-home');
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Domains', 'fas fa-globe', Domain::class);
         yield MenuItem::linkToCrud('Received Emails', 'fas fa-envelope', ReceivedEmail::class);
     }
 }

@@ -31,8 +31,8 @@ class ReceivedEmailCrudController extends AbstractCrudController
             TextField::new('fromAddress'),
             TextField::new('toMultipleString'),
             TextField::new('bccMultipleString'),
-            TextField::new('html')->hideOnIndex(),
             DateTimeField::new('createdAt'),
+            TextField::new('html')->hideOnIndex(),
             TextField::new('metadataString')->hideOnIndex(),
         ];
     }
