@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\DTO\Response\CreateEmailBoxResponseDto;
 use App\DTO\Response\ReceivedEmailResponseDto;
-use App\Repository\ReceivedEmailRepository;
 use App\Service\Handler\CreateEmailBoxHandler;
 use App\Service\ReceivedEmail\ReceivedEmailsFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +16,6 @@ final class EmailBoxController extends AbstractController
 {
     public function __construct(
         private CreateEmailBoxHandler $createEmailBoxHandler,
-        private ReceivedEmailRepository $receivedEmailRepository,
         private ReceivedEmailsFetcher $receivedEmailsFetcher,
     ) {
     }
