@@ -1300,6 +1300,14 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     script_attributes?: array<string, scalar|null>,
  *     link_attributes?: array<string, scalar|null>,
  * }
+ * @psalm-type WebProfilerConfig = array{
+ *     toolbar?: bool|array{ // Profiler toolbar configuration
+ *         enabled?: bool, // Default: false
+ *         ajax_replace?: bool, // Replace toolbar on AJAX requests // Default: false
+ *     },
+ *     intercept_redirects?: bool, // Default: false
+ *     excluded_ajax_paths?: scalar|null, // Default: "^/((index|app(_[\\w]+)?)\\.php/)?_wdt"
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1321,6 +1329,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         security?: SecurityConfig,
  *         webpack_encore?: WebpackEncoreConfig,
+ *         web_profiler?: WebProfilerConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1343,6 +1352,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         security?: SecurityConfig,
  *         webpack_encore?: WebpackEncoreConfig,
+ *         web_profiler?: WebProfilerConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
