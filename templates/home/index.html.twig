@@ -3,74 +3,14 @@
 {% block title %}Temp Fast Mail - Disposable Temporary Email{% endblock %}
 
 {% block body %}
-    <section class="hero is-dark">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns is-centered">
-                    <div class="column is-8">
-                        <h1 class="title is-5 has-text-centered has-text-white mb-4">
-                            Your Temporary Email Address
-                        </h1>
-
-                        <div class="columns is-mobile is-multiline">
-                            <div class="column is-12-mobile is-9-tablet">
-                                <label>
-                                    <input
-                                        class="input is-medium has-text-weight-semibold"
-                                        type="text"
-                                        value="some-email@maildrop.cc"
-                                        readonly>
-                                </label>
-                            </div>
-
-                            <div class="column is-12-mobile is-3-tablet">
-                                <button class="button is-primary is-medium is-fullwidth">
-                                    <span class="icon"><i class="fas fa-copy"></i></span>
-                                    <span>Copy</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="buttons is-centered">
-                    <div class="is-inline">
-                        <button class="button is-light">
-                            <span class="icon"><i class="fas fa-sync-alt"></i></span>
-                            <span>Regenerate Email</span>
-                        </button>
-
-{#                        <button class="button is-light">#}
-{#                            <span class="icon"><i class="fas fa-envelope-open-text"></i></span>#}
-{#                            <span>Claim Email</span>#}
-{#                        </button>#}
-                    </div>
-                </div>
-
-                <div class="columns is-centered">
-                    <div class="column is-8">
-                        <p class="has-text-centered has-text-white is-size-6">
-                            No more spam, marketing emails, or hacker attacks. Keep your real mailbox safe and tidy with Temp Fast Mail, a free, temporary, anonymous, and secure email address.
-                        </p>
-                    </div>
-                </div>
+    <div {{ react_component('Application') }}>
+        <div class="is-flex is-justify-content-center is-align-items-center is-fullheight">
+            <div class="has-text-centered">
+                <p>Loading...</p>
+                <i class="fas fa-cog fa-spin fa-3x"></i>
             </div>
         </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-8">
-                    <span>todo inbox</span>
-
-                    <div {{ react_component('Hello', { fullName: 'Fabien' }) }}>
-                        Loading... <i class="fas fa-cog fa-spin fa-3x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <hr>
 
