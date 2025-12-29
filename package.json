@@ -17,6 +17,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^7.1.0",
         "bulma": "^1.0.4"
     }
 }
