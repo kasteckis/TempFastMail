@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: TemporaryEmailBox::class, mappedBy: 'owner')]
     private Collection $temporaryEmailBoxes;
 
-    public function __construct(private readonly TemporaryEmailBox $temporaryEmailBox)
+    public function __construct()
     {
         $this->temporaryEmailBoxes = new ArrayCollection();
     }
