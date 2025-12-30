@@ -145,7 +145,7 @@ const Inbox = ({temporaryEmailBox}: Props) => {
                     <hr/>
 
                     {/* Subject */}
-                    <p className="is-size-5 has-text-weight-bold mb-3">
+                    <p className="is-size-8 has-text-weight-bold mb-3">
                       {selectedEmail.subject}
                     </p>
 

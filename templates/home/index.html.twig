@@ -12,7 +12,8 @@
         </div>
     </div>
 
-    <hr>
-
-    {% include 'components/faq.html.twig' %}
+    {% if app.request.server.get('DISPLAY_FAQ_ON_HOMEPAGE')|lower == 'true' %}
+        <hr>
+        {% include 'components/faq.html.twig' %}
+    {% endif %}
 {% endblock %}

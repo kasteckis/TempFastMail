@@ -51,6 +51,7 @@
                     A good disposable email service should:
                 </p>
                 <ul class="ml-5" style="list-style-type: disc;">
+                    <li>Should be open source. You can view code of this website <a href="https://github.com/kasteckis/temp-fast-mail" target="_blank">here</a></li>
                     <li>Allow creating temporary addresses with one click</li>
                     <li>Require no registration or personal information</li>
                     <li>Keep email addresses anonymous</li>
@@ -60,7 +61,7 @@
                 </ul>
 
                 <p>
-                    Stay spam-free and save time with <a href="https://tempfastmail.com" target="_blank">TempFastMail.com</a>.
+                    Stay spam-free and save time with <a href="{{ app.request.server.get('DEFAULT_URI') }}" target="_blank">{{ app.request.server.get('DEFAULT_URI')|domain }}</a>.
                 </p>
 
                 <h2 class="title is-4 mt-3">How to Use a Disposable Email Address</h2>
@@ -70,7 +71,7 @@
 
                 <h2 class="title is-4 mt-3">Conclusion</h2>
                 <p>
-                    Using disposable emails protects your identity when participating in online forums, chats, or file-sharing platforms. Keep your real email private, avoid spam, and stay safe with <a href="https://tempfastmail.com" target="_blank">TempFastMail.com</a>.
+                    Using disposable emails protects your identity when participating in online forums, chats, or file-sharing platforms. Keep your real email private, avoid spam, and stay safe with <a href="{{ app.request.server.get('DEFAULT_URI') }}" target="_blank">{{ app.request.server.get('DEFAULT_URI')|domain }}</a>.
                 </p>
             </div>
         </div>

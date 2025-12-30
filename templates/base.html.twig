@@ -14,7 +14,7 @@
         {% endblock %}
 
         {% if app.request.server.get('PLAUSIBLE_ANALYTICS_URL') %}
-            <script defer data-domain="{{ app.request.server.get('DEFAULT_DOMAIN') }}" src="{{ app.request.server.get('PLAUSIBLE_ANALYTICS_URL') }}"></script>
+            <script defer data-domain="{{ app.request.server.get('DEFAULT_URI')|domain }}" src="{{ app.request.server.get('PLAUSIBLE_ANALYTICS_URL') }}"></script>
         {% endif %}
     </head>
     <body>

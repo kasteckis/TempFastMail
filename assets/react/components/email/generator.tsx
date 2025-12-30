@@ -38,10 +38,11 @@ const Generator = ({temporaryEmailBox, handleRegenerateEmail}: Props) => {
                 <div className="column is-12-mobile is-9-tablet">
                   <label>
                     <input
-                      className="input is-medium has-text-weight-semibold"
+                      className="input is-medium has-text-weight-semibold is-size-6-mobile"
                       type="text"
                       value={temporaryEmailBox === null ? 'Loading ...' : temporaryEmailBox.email}
-                      readOnly/>
+                      readOnly
+                    />
                   </label>
                 </div>
 
