@@ -110,58 +110,56 @@ const Inbox = ({temporaryEmailBox}: Props) => {
               })}
 
               {selectedEmail && (
-                <div className="box" style={{ maxWidth: "800px", margin: "20px auto" }}>
+                <div className="box p-0" style={{ borderRadius: "12px", overflow: "hidden" }}>
+                  <div className="p-4">
 
-                  {/* Back Button */}
-                  <button
-                    className="button is-link is-light mb-4"
-                    onClick={() => setSelectedEmail(null)}
-                  >
-                    ← Back
-                  </button>
+                    {/* Header Row */}
+                    <div className="is-flex is-justify-content-space-between is-align-items-center mb-4">
 
-                  {/* Header: From */}
-                  <div className="columns is-vcentered mb-3">
-                    <div className="column">
-                      {selectedEmail.from_name && (
-                        <p className="has-text-weight-semibold">
-                          Sender name: {selectedEmail.from_name}
+                      {/* Back Button */}
+                      <button
+                        className="button is-light"
+                        onClick={() => setSelectedEmail(null)}
+                      >
+                        <span className="icon">←</span>
+                        <span>Back</span>
+                      </button>
+
+                      {/* Date */}
+                      {selectedEmail.received_at && (
+                        <p className="has-text-grey is-size-7">
+                          {new Date(selectedEmail.received_at).toLocaleString()}
                         </p>
                       )}
-                      <p className="is-size-7 has-text-grey">
-                        Sender email: {selectedEmail.real_from}
-                      </p>
                     </div>
-                  </div>
 
-                  {/* Subject */}
-                  <div className="mb-3">
-                    <p className="is-size-5 has-text-weight-bold">
+                    {/* Sender */}
+                    <p className="has-text-weight-semibold mb-2">
+                      {selectedEmail.from_name ? (
+                        <>From: {selectedEmail.from_name} {" <"}{selectedEmail.real_from}{">"}</>
+                      ) : (
+                        <>From: {selectedEmail.real_from}</>
+                      )}
+                    </p>
+
+                    <hr/>
+
+                    {/* Subject */}
+                    <p className="is-size-5 has-text-weight-bold mb-3">
                       {selectedEmail.subject}
                     </p>
-                  </div>
 
-                  {/* Date / Metadata */}
-                  {selectedEmail.received_at && (
-                    <div className="mb-3 has-text-grey is-size-7">
-                      <span>
-                        Date: {new Date(selectedEmail.received_at).toLocaleString()}
-                      </span>
-                    </div>
-                  )}
+                    <hr/>
 
-                  {/* Email body */}
-                  <div className="content" style={{ whiteSpace: "pre-wrap" }}>
+                    {/* Body */}
                     <div
                       className="content"
-                      dangerouslySetInnerHTML={{
-                        __html: selectedEmail.html,
-                      }}
+                      style={{ whiteSpace: "pre-wrap", overflowX: "auto" }}
+                      dangerouslySetInnerHTML={{ __html: selectedEmail.html }}
                     />
                   </div>
                 </div>
               )}
-
             </div>
           </div>
         </div>
