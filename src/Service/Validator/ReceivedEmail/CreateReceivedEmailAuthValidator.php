@@ -2,8 +2,8 @@
 
 namespace App\Service\Validator\ReceivedEmail;
 
+use App\Exception\ReceivedEmail\UnauthorizedToCreateReceivedEmailException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class CreateReceivedEmailAuthValidator
 {
@@ -13,6 +13,6 @@ class CreateReceivedEmailAuthValidator
             return;
         }
 
-        throw new UnauthorizedHttpException('Bad authorization KEY');
+        throw new UnauthorizedToCreateReceivedEmailException();
     }
 }

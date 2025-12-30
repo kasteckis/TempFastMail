@@ -4,7 +4,6 @@ namespace App\Exception\Domain;
 
 use App\Exception\AbstractCustomException;
 use App\Exception\ErrorCode;
-use Override;
 use Symfony\Component\HttpFoundation\Response;
 
 class ThereAreNoDomainsException extends AbstractCustomException
