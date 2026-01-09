@@ -1,3 +1,5 @@
+start:
+	docker compose up -d --build
 ssh:
 	docker exec -it tempfastmail_php bash
 deploy-prod:

@@ -47,6 +47,18 @@
             "config/routes/easyadmin.yaml"
         ]
     },
+    "sentry/sentry-symfony": {
+        "version": "5.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "b6cb4b34429dadecd7187852123be19d628fa37a"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
     "symfony/console": {
         "version": "7.4",
         "recipe": {

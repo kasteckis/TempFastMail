@@ -1372,6 +1372,85 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     controllers_path?: scalar|null, // The path to the directory where React controller components are stored - relevant only when using symfony/asset-mapper. // Default: "%kernel.project_dir%/assets/react/controllers"
  *     name_glob?: list<scalar|null>,
  * }
+ * @psalm-type SentryConfig = array{
+ *     dsn?: scalar|null, // If this value is not provided, the SDK will try to read it from the SENTRY_DSN environment variable. If that variable also does not exist, the SDK will not send any events.
+ *     register_error_listener?: bool, // Default: true
+ *     register_error_handler?: bool, // Default: true
+ *     logger?: scalar|null, // The service ID of the PSR-3 logger used to log messages coming from the SDK client. Be aware that setting the same logger of the application may create a circular loop when an event fails to be sent. // Default: null
+ *     options?: array{
+ *         integrations?: mixed, // Default: []
+ *         default_integrations?: bool,
+ *         prefixes?: list<scalar|null>,
+ *         sample_rate?: float, // The sampling factor to apply to events. A value of 0 will deny sending any event, and a value of 1 will send all events.
+ *         enable_tracing?: bool,
+ *         traces_sample_rate?: float, // The sampling factor to apply to transactions. A value of 0 will deny sending any transaction, and a value of 1 will send all transactions.
+ *         traces_sampler?: scalar|null,
+ *         profiles_sample_rate?: float, // The sampling factor to apply to profiles. A value of 0 will deny sending any profiles, and a value of 1 will send all profiles. Profiles are sampled in relation to traces_sample_rate
+ *         enable_logs?: bool,
+ *         enable_metrics?: bool, // Default: true
+ *         attach_stacktrace?: bool,
+ *         attach_metric_code_locations?: bool,
+ *         context_lines?: int,
+ *         environment?: scalar|null, // Default: "%kernel.environment%"
+ *         logger?: scalar|null,
+ *         spotlight?: bool,
+ *         spotlight_url?: scalar|null,
+ *         release?: scalar|null, // Default: "%env(default::SENTRY_RELEASE)%"
+ *         server_name?: scalar|null,
+ *         ignore_exceptions?: list<scalar|null>,
+ *         ignore_transactions?: list<scalar|null>,
+ *         before_send?: scalar|null,
+ *         before_send_transaction?: scalar|null,
+ *         before_send_check_in?: scalar|null,
+ *         before_send_metrics?: scalar|null,
+ *         before_send_log?: scalar|null,
+ *         before_send_metric?: scalar|null,
+ *         trace_propagation_targets?: mixed,
+ *         tags?: array<string, scalar|null>,
+ *         error_types?: scalar|null,
+ *         max_breadcrumbs?: int,
+ *         before_breadcrumb?: mixed,
+ *         in_app_exclude?: list<scalar|null>,
+ *         in_app_include?: list<scalar|null>,
+ *         send_default_pii?: bool,
+ *         max_value_length?: int,
+ *         transport?: scalar|null,
+ *         http_client?: scalar|null,
+ *         http_proxy?: scalar|null,
+ *         http_proxy_authentication?: scalar|null,
+ *         http_connect_timeout?: float, // The maximum number of seconds to wait while trying to connect to a server. It works only when using the default transport.
+ *         http_timeout?: float, // The maximum execution time for the request+response as a whole. It works only when using the default transport.
+ *         http_ssl_verify_peer?: bool,
+ *         http_compression?: bool,
+ *         capture_silenced_errors?: bool,
+ *         max_request_body_size?: "none"|"never"|"small"|"medium"|"always",
+ *         class_serializers?: array<string, scalar|null>,
+ *     },
+ *     messenger?: bool|array{
+ *         enabled?: bool, // Default: false
+ *         capture_soft_fails?: bool, // Default: true
+ *         isolate_breadcrumbs_by_message?: bool, // Default: false
+ *     },
+ *     tracing?: bool|array{
+ *         enabled?: bool, // Default: true
+ *         dbal?: bool|array{
+ *             enabled?: bool, // Default: true
+ *             connections?: list<scalar|null>,
+ *         },
+ *         twig?: bool|array{
+ *             enabled?: bool, // Default: true
+ *         },
+ *         cache?: bool|array{
+ *             enabled?: bool, // Default: true
+ *         },
+ *         http_client?: bool|array{
+ *             enabled?: bool, // Default: false
+ *         },
+ *         console?: array{
+ *             excluded_commands?: list<scalar|null>,
+ *         },
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1417,6 +1496,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig_component?: TwigComponentConfig,
  *         stimulus?: StimulusConfig,
  *         react?: ReactConfig,
+ *         sentry?: SentryConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
