@@ -40,4 +40,5 @@ $ docker push kasteckis/tempfastmail:latest
 
 ## Any issues or questions?
 
-Feel free to open an issue on GitHub - [here](https://github.com/kasteckis/TempFastMail/issues)
+Feel free to open an issue on GitHub - [here](https://github.com/kasteckis/TempFastMail/issues)  
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B81RZTWV)
