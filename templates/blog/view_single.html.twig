@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ blog.title }} - Temp Fast Mail{% endblock %}
+
+{% block body %}
+    <section class="hero is-primary is-small">
+        <div class="hero-body">
+            <div class="container">
+                <nav class="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
+                    <ul>
+                        <li><a href="/blog">Blog</a></li>
+                        <li class="is-active"><a aria-current="page">{{ blog.title }}</a></li>
+                    </ul>
+                </nav>
+                <h1 class="title">{{ blog.title }}</h1>
+                {% if blog.createdAt is defined and blog.createdAt %}
+                    <p class="subtitle">
+                        <time datetime="{{ blog.createdAt|date('Y-m-d') }}">
+                            {{ blog.createdAt|date('Y-m-d') }}
+                        </time>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            {% if blog.photo %}
+                <figure class="image is-16by9">
+                    <img
+                        class="has-ratio"
+                        src="{{ asset('uploads/images/blogs/' ~ blog.photo) }}"
+                        alt="{{ blog.title }} photo"
+                        style="object-fit: cover; object-position: center;"
+                    >
+                </figure>
+            {% endif %}
+
+            <div class="content is-medium">
+                {% if blog.description is defined and blog.description %}
+                    {{ blog.description|raw }}
+                {% else %}
+                    {{ blog.shortDescription|raw }}
+                {% endif %}
+            </div>
+
+            <div class="level mt-6">
+                <div class="level-left">
+                    <a class="button is-light" href="/blog">← Back to blog</a>
+                </div>
+                <div class="level-right">
+                    {# optional tags/share area #}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# --- Suggested Articles Section --- #}
+    {% if suggested_blogs is defined and suggested_blogs|length > 0 %}
+        <section class="section">
+            <div class="container">
+                <h2 class="title is-4 has-text-centered mb-5">Similar blog</h2>
+                <div class="columns is-multiline">
+                    {% for s_blog in suggested_blogs|slice(0,3) %}
+                        <div class="column is-12-mobile is-6-tablet is-4-desktop">
+                            <div class="card">
+                                <a class="card no-link-styles" href="/blog/{{ s_blog.slug }}" aria-label="{{ s_blog.title }}">
+                                    {% if s_blog.photo %}
+                                        <div class="card-image">
+                                            <figure class="image is-4by3">
+                                                <img
+                                                    src="{{ asset('uploads/images/blogs/' ~ s_blog.photo) }}"
+                                                    alt="{{ s_blog.title }} photo"
+                                                    style="object-fit: cover; object-position: center;"
+                                                >
+                                            </figure>
+                                        </div>
+                                    {% endif %}
+                                    <div class="card-content">
+                                        <p class="title is-6">{{ s_blog.title }}</p>
+                                        <p class="content is-small">{{ s_blog.shortDescription|raw }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

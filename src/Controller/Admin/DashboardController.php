@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Blog;
 use App\Entity\Domain;
 use App\Entity\ReceivedEmail;
 use App\Entity\TemporaryEmailBox;
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fas fa-home');
         yield MenuItem::linkToCrud('Domains', 'fas fa-globe', Domain::class);
+        yield MenuItem::linkToCrud('Blog Posts', 'fas fa-pen', Blog::class);
         yield MenuItem::section('Users data');
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Temporary Email Boxes', 'fas fa-paper-plane', TemporaryEmailBox::class);

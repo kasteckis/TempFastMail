@@ -42,13 +42,11 @@
     function acceptCookies() {
         localStorage.setItem(COOKIE_KEY, 'accepted');
         hidePopup();
-        // load AdSense / analytics here
     }
 
     function rejectCookies() {
         localStorage.setItem(COOKIE_KEY, 'rejected');
         hidePopup();
-        // do NOT load personalized ads
     }
 
     function hidePopup() {

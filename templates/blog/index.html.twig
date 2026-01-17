@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blogs - Temp Fast Mail{% endblock %}
+
+{% block body %}
+    <section id="blog" class="section">
+        <div class="container">
+            <h2 class="title is-3 has-text-centered">Blog</h2>
+            <div class="columns is-multiline">
+                {% for blog in blogs %}
+                    <div class="column is-12-mobile is-6-tablet is-6-desktop">
+                        <div class="card">
+                            <a class="card no-link-styles" href="/blog/{{ blog.slug }}" aria-label="{{ blog.title }}">
+                                <div class="card-image">
+                                    <figure class="image is-16by9">
+                                        <img
+                                            class="has-ratio"
+                                            src="{{ asset('uploads/images/blogs/' ~ blog.photo) }}"
+                                            alt="{{ blog.title }} photo"
+                                            style="object-fit: cover; object-position: center;"
+                                        >
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">{{ blog.title }}</p>
+                                    <p class="content">{{ blog.shortDescription|raw }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if pages > 1 %}
+            <nav class="pagination is-centered mt-6" role="navigation" aria-label="pagination">
+                <ul class="pagination-list" style="display: flex; gap: 0.25rem; align-items: center;">
+
+                    {# Previous button #}
+                    <li>
+                        {% if page <= 1 %}
+                            <span class="pagination-previous is-disabled">Back</span>
+                        {% else %}
+                            <a class="pagination-previous" href="{{ path('app_blog', {page: page - 1}) }}">Back</a>
+                        {% endif %}
+                    </li>
+
+                    {# Page numbers #}
+                    {% for i in 1..pages %}
+                        <li>
+                            {% if i == page %}
+                                <span class="pagination-link is-current">{{ i }}</span>
+                            {% else %}
+                                <a class="pagination-link" href="{{ path('app_blog', {page: i}) }}">{{ i }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+
+                    {# Next button #}
+                    <li>
+                        {% if page >= pages %}
+                            <span class="pagination-next is-disabled">Next</span>
+                        {% else %}
+                            <a class="pagination-next" href="{{ path('app_blog', {page: page + 1}) }}">Next</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+    </section>
+{% endblock %}
