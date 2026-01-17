@@ -1,0 +1,35 @@
+<section id="blog" class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <h2 class="title is-3 has-text-centered">Recent blog posts</h2>
+                <div class="columns is-multiline">
+                    {% for blog in blogs %}
+                        <div class="column is-12-mobile is-6-tablet is-6-desktop">
+                            <div class="card">
+                                <a class="card no-link-styles" href="/blog/{{ blog.slug }}" aria-label="{{ blog.title }}">
+                                    <div class="card-image">
+                                        <figure class="image is-16by9">
+                                            <img
+                                                    class="has-ratio"
+                                                    src="{{ asset('uploads/images/blogs/' ~ blog.photo) }}"
+                                                    alt="{{ blog.title }} photo"
+                                                    style="object-fit: cover; object-position: center;"
+                                            >
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <p class="title is-5 has-text-dark">{{ blog.title }}</p>
+                                        <p class="content has-text-dark">
+                                            {{ blog.shortDescription|raw }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
