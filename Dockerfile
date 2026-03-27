@@ -3,94 +3,74 @@
 # Versions
 FROM dunglas/frankenphp:1.11-php8.5 AS frankenphp_upstream
 
-# The different stages of this Dockerfile are meant to be built into separate images
-# https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
-# https://docs.docker.com/compose/compose-file/#target
-
-
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
-
 WORKDIR /app
-
 VOLUME /app/var/
 
 # persistent / runtime deps
-# hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	file \
+    file \
     cron \
     supervisor \
     procps \
-	git \
-	&& rm -rf /var/lib/apt/lists/*
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
-	install-php-extensions \
-		@composer \
-		apcu \
-		intl \
+    install-php-extensions \
+        @composer \
+        apcu \
+        intl \
         pdo_mysql \
-		opcache \
-		zip \
-	;
+        opcache \
+        zip;
 
-# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
-
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
-
-###> recipes ###
-###< recipes ###
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
 
 COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
 COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 COPY --link frankenphp/Caddyfile /etc/frankenphp/Caddyfile
+
+# ====================== MODIFICATION POUR EMAILS PERMANENTS ======================
+# On copie le crontab mais on va le désactiver plus bas
 COPY --link frankenphp/crontab /etc/frankenphp/crontab
 
-RUN crontab -u root /etc/frankenphp/crontab
+# IMPORTANT : On commente l'installation du cron pour la suppression automatique
+# RUN crontab -u root /etc/frankenphp/crontab
+
+# Si tu veux garder le cron mais désactiver seulement la suppression, laisse la ligne ci-dessus commentée
+# ================================================================================
 
 ENTRYPOINT ["docker-entrypoint"]
-
 HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
 
-# Dev FrankenPHP image
+# Dev image
 FROM frankenphp_base AS frankenphp_dev
-
 ENV APP_ENV=dev
 ENV XDEBUG_MODE=off
 ENV FRANKENPHP_WORKER_CONFIG=watch
-
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
-
 RUN set -eux; \
-	install-php-extensions \
-		xdebug \
-	;
-
+    install-php-extensions xdebug;
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
 COPY --link frankenphp/supervisord_dev.conf /etc/supervisor/conf.d/supervisord.conf
-
 CMD ["/usr/bin/supervisord"]
 
-# Prod FrankenPHP image
+# Prod image (celle qui sera utilisée)
 FROM frankenphp_base AS frankenphp_prod
-
 ENV APP_ENV=prod
-
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
 COPY --link frankenphp/conf.d/20-app.prod.ini $PHP_INI_DIR/app.conf.d/
 
-# prevent the reinstallation of vendors at every changes in the source code
 COPY --link composer.* symfony.* ./
 RUN set -eux; \
-	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+    composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 
-# copy sources
 COPY --link --exclude=frankenphp/ . ./
 COPY --link frankenphp/supervisord_prod.conf /etc/supervisor/conf.d/supervisord.conf
 
@@ -98,7 +78,6 @@ RUN set -eux
 RUN mkdir -p var/cache var/log var/share
 RUN composer dump-autoload --classmap-authoritative --no-dev
 RUN composer dump-env prod
-#RUN composer run-script --no-dev post-install-cmd
 RUN chmod +x bin/console
 RUN sync
 
