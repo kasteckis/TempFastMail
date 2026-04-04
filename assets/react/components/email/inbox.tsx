@@ -187,9 +187,29 @@ const Inbox = ({temporaryEmailBox}: Props) => {
 
                     <hr/>
 
-                    {/* Body */}
-                    <div
-                      dangerouslySetInnerHTML={{ __html: selectedEmail.html }}
+                    {/* Body — rendered in an iframe for full CSS isolation */}
+                    <iframe
+                      srcDoc={selectedEmail.html}
+                      sandbox="allow-same-origin"
+                      style={{
+                        width: "100%",
+                        border: "none",
+                        minHeight: "300px",
+                      }}
+                      onLoad={(e) => {
+                        // Auto-resize iframe to fit its content
+                        const iframe = e.target as HTMLIFrameElement;
+                        const body = iframe.contentDocument?.body;
+                        if (body) {
+                          const resize = () => {
+                            iframe.style.height = body.scrollHeight + "px";
+                          };
+                          resize();
+                          // Observe size changes (e.g. images loading)
+                          const observer = new ResizeObserver(resize);
+                          observer.observe(body);
+                        }
+                      }}
                     />
                   </div>
                 </div>
