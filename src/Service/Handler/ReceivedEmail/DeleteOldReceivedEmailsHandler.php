@@ -13,6 +13,6 @@ class DeleteOldReceivedEmailsHandler
 
     public function deleteOlderThan(\DateTimeImmutable $olderThan): int
     {
-        return $this->receivedEmailRepository->deleteOlderThan24Hours($olderThan);
+        return $this->receivedEmailRepository->deleteOlderThan($olderThan);
     }
 }

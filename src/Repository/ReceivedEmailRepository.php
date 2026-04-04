@@ -16,7 +16,7 @@ class ReceivedEmailRepository extends ServiceEntityRepository
         parent::__construct($registry, ReceivedEmail::class);
     }
 
-    public function deleteOlderThan24Hours(\DateTimeImmutable $cutoffDate): int
+    public function deleteOlderThan(\DateTimeImmutable $cutoffDate): int
     {
         return $this->createQueryBuilder('r')
             ->delete()
