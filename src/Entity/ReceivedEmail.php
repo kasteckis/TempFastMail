@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ReceivedEmailRepository::class)]
+#[ORM\Index(name: 'idx_real_to', columns: ['real_to'])]
 class ReceivedEmail
 {
     #[ORM\Id]
