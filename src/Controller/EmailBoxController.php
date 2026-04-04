@@ -10,6 +10,7 @@ use App\DTO\Response\ValidateEmailBoxResponseDto;
 use App\Entity\TemporaryEmailBox;
 use App\Repository\TemporaryEmailBoxRepository;
 use App\Service\Client\ClientIpRetriever;
+use App\Service\Client\CloudflareCountryRetriever;
 use App\Service\Handler\ReceivedEmail\ReceivedEmailsFetcher;
 use App\Service\Handler\ReceivedEmail\ReceivedEmailUpdater;
 use App\Service\Handler\TemporaryEmailBox\CreateEmailBoxHandler;
@@ -32,6 +33,7 @@ final class EmailBoxController extends AbstractController
         private ReceivedEmailUpdater $receivedEmailUpdater,
         private TemporaryEmailBoxFetcher $temporaryEmailBoxFetcher,
         private TemporaryEmailBoxUpdater $temporaryEmailBoxUpdater,
+        private CloudflareCountryRetriever $cloudflareCountryRetriever,
     ) {
     }
 
@@ -39,7 +41,7 @@ final class EmailBoxController extends AbstractController
     public function createEmailBox(Request $request): Response
     {
         $creatorIp = $this->clientIpRetriever->getClientIp($request);
-        $countryCode = $request->headers->get('CF-IPCountry'); // todo: create cloudflareCountryRetriever and get it from there.
+        $countryCode = $this->cloudflareCountryRetriever->getCountryCode($request);
 
         $emailBox = $this->createEmailBoxHandler->create($creatorIp, $countryCode);
 

@@ -26,6 +26,7 @@ class TemporaryEmailBoxCrudController extends AbstractCrudController
             TextField::new('email'),
             TextField::new('uuid'),
             TextField::new('creatorIp'),
+            TextField::new('countryCode'),
             AssociationField::new('owner'),
             AssociationField::new('receivedEmails'),
             DateTimeField::new('createdAt')->setDisabled(),
