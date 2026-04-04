@@ -3,6 +3,18 @@
 {% block title %}Temp Fast Mail - Disposable Temporary Email{% endblock %}
 
 {% block body %}
+    <script>
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const email = params.get('impersonate_email');
+            const uuid = params.get('impersonate_uuid');
+            if (email && uuid) {
+                localStorage.setItem('email', email);
+                localStorage.setItem('email-uuid', uuid);
+                window.history.replaceState({}, '', '/');
+            }
+        })();
+    </script>
     <div {{ react_component('Application') }}>
         <div class="is-flex is-justify-content-center is-align-items-center is-fullheight">
             <div class="has-text-centered">

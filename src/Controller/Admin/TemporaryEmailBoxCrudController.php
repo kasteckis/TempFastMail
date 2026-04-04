@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\TemporaryEmailBox;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -33,6 +35,22 @@ class TemporaryEmailBoxCrudController extends AbstractCrudController
             DateTimeField::new('lastAccessedAt')->setDisabled(),
         ];
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $impersonateAction = Action::new('impersonate', 'Impersonate', 'fas fa-user-secret')
+            ->linkToUrl(function (TemporaryEmailBox $emailBox): string {
+                return '/?' . http_build_query([
+                    'impersonate_email' => $emailBox->getEmail(),
+                    'impersonate_uuid' => $emailBox->getUuid(),
+                ]);
+            });
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $impersonateAction)
+            ->add(Crud::PAGE_DETAIL, $impersonateAction);
+    }
+
 
     public function configureCrud(Crud $crud): Crud
     {
