@@ -10,6 +10,8 @@ when@prod:
                 - 'Symfony\Component\Debug\Exception\FatalErrorException'
                 - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
                 - 'Symfony\Component\Security\Core\Exception\AccessDeniedException'
+                - 'Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException'
+                - 'Symfony\Component\HttpKernel\Exception\BadRequestHttpException'
 #
 #        # If you are using Monolog, you also need this additional configuration to log the errors correctly:
 #        # https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
