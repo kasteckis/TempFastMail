@@ -61,4 +61,14 @@ class ReceivedEmailRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function countByDomain(string $domain): int
+    {
+        return (int) $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->where('r.realTo LIKE :domain')
+            ->setParameter('domain', '%@' . $domain)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -52,4 +52,10 @@ class Domain
 
         return $this;
     }
+
+    public function getEmailCount(): string
+    {
+        // Required so EasyAdmin could override it.
+        return '';
+    }
 }
