@@ -35,6 +35,7 @@ class ReceivedEmailCrudController extends AbstractCrudController
             TextField::new('bccMultipleString')->hideOnIndex(),
             DateTimeField::new('createdAt'),
             DateTimeField::new('readAt'),
+            DateTimeField::new('subjectReadAt'),
             TextField::new('html')->hideOnIndex(),
             TextField::new('metadataString')->hideOnIndex(),
         ];

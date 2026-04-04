@@ -54,6 +54,9 @@ class ReceivedEmail
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $readAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $subjectReadAt = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -246,6 +249,18 @@ class ReceivedEmail
     public function setReadAt(\DateTimeImmutable $readAt): static
     {
         $this->readAt = $readAt;
+
+        return $this;
+    }
+
+    public function getSubjectReadAt(): ?\DateTimeImmutable
+    {
+        return $this->subjectReadAt;
+    }
+
+    public function setSubjectReadAt(\DateTimeImmutable $subjectReadAt): static
+    {
+        $this->subjectReadAt = $subjectReadAt;
 
         return $this;
     }
