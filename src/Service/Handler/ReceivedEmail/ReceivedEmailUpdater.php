@@ -18,4 +18,18 @@ class ReceivedEmailUpdater
 
         $this->entityManager->flush();
     }
+
+    /**
+     * @param ReceivedEmail[] $receivedEmails
+     */
+    public function markEmailsSubjectAsRead(array $receivedEmails): void
+    {
+        $now = new \DateTimeImmutable();
+
+        foreach ($receivedEmails as $receivedEmail) {
+            $receivedEmail->setSubjectReadAt($now);
+        }
+
+        $this->entityManager->flush();
+    }
 }

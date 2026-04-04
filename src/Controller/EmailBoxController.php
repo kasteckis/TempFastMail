@@ -71,6 +71,8 @@ final class EmailBoxController extends AbstractController
 
         $receivedEmails = $this->receivedEmailsFetcher->fetchByTemporaryEmailBox($temporaryEmailBox);
 
+        $this->receivedEmailUpdater->markEmailsSubjectAsRead($receivedEmails);
+
         $receivedEmailsResponseDtos = array_map(
             fn ($receivedEmail) => ReceivedEmailResponseListDto::fromEntity($receivedEmail),
             $receivedEmails
