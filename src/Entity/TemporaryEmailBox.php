@@ -40,6 +40,9 @@ class TemporaryEmailBox
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastAccessedAt = null;
 
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $countryCode = null;
+
     public function __construct()
     {
         $this->uuid = Uuid::v4();
@@ -150,6 +153,18 @@ class TemporaryEmailBox
     public function setLastAccessedAt(?\DateTimeImmutable $lastAccessedAt): static
     {
         $this->lastAccessedAt = $lastAccessedAt;
+
+        return $this;
+    }
+
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(?string $countryCode): static
+    {
+        $this->countryCode = $countryCode;
 
         return $this;
     }

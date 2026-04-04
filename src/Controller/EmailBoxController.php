@@ -39,8 +39,9 @@ final class EmailBoxController extends AbstractController
     public function createEmailBox(Request $request): Response
     {
         $creatorIp = $this->clientIpRetriever->getClientIp($request);
+        $countryCode = $request->headers->get('CF-IPCountry'); // todo: create cloudflareCountryRetriever and get it from there.
 
-        $emailBox = $this->createEmailBoxHandler->create($creatorIp);
+        $emailBox = $this->createEmailBoxHandler->create($creatorIp, $countryCode);
 
         return $this->json(CreateEmailBoxResponseDto::fromEntity($emailBox));
     }

@@ -18,7 +18,7 @@ class CreateEmailBoxHandler
     ) {
     }
 
-    public function create(string $creatorIp): TemporaryEmailBox
+    public function create(string $creatorIp, ?string $countryCode): TemporaryEmailBox
     {
         $domain = $this->domainRepository->findOneActiveRandomDomain();
 
@@ -28,7 +28,7 @@ class CreateEmailBoxHandler
 
         $emailAddress = $this->temporaryEmailBoxGenerator->generateUniqueEmailAddress($domain->getDomain());
 
-        $emailBox = $this->emailBoxFactory->create($emailAddress, $creatorIp);
+        $emailBox = $this->emailBoxFactory->create($emailAddress, $creatorIp, $countryCode);
 
         $this->entityManager->persist($emailBox);
         $this->entityManager->flush();
