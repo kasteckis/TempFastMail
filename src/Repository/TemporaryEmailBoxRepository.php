@@ -21,7 +21,6 @@ class TemporaryEmailBoxRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.createdAt < :olderThan')
             ->setParameter('olderThan', $olderThan)
-            ->setMaxResults(1000)
             ->getQuery()
             ->getResult();
     }
