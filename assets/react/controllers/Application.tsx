@@ -26,6 +26,18 @@ const Application = () => {
 
   useEffect(() => {
     if (temporaryEmailBox === null) {
+      const params = new URLSearchParams(window.location.search);
+      const impersonateEmail = params.get('impersonate_email');
+      const impersonateUuid = params.get('impersonate_uuid');
+
+      if (impersonateEmail && impersonateUuid) {
+        localStorage.setItem('email', impersonateEmail);
+        localStorage.setItem('email-uuid', impersonateUuid);
+        window.history.replaceState({}, '', '/');
+        setTemporaryEmailBox({ email: impersonateEmail, uuid: impersonateUuid });
+        return;
+      }
+
       const savedEmail = localStorage.getItem("email");
       const savedUuid = localStorage.getItem("email-uuid");
 
