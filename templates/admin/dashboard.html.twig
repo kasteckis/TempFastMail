@@ -51,11 +51,11 @@
                 </tr>
                 <tr>
                     <td>Oldest received email at</td>
-                    <td>{{ oldestReceivedEmailAt.createdAt|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ oldestReceivedEmailAt ? oldestReceivedEmailAt.createdAt|date('Y-m-d H:i:s') : 'N/A' }}</td>
                 </tr>
                 <tr>
                     <td>Newest received email at</td>
-                    <td>{{ newestReceivedEmailAt.createdAt|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ newestReceivedEmailAt ? newestReceivedEmailAt.createdAt|date('Y-m-d H:i:s') : 'N/A' }}</td>
                 </tr>
                 </tbody>
             </table>
