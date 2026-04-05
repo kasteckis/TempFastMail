@@ -50,6 +50,10 @@
                     <td>{{ unreadEmails }}</td>
                 </tr>
                 <tr>
+                    <td>Emails with read subjects</td>
+                    <td>{{ emailsWithReadSubjects }}</td>
+                </tr>
+                <tr>
                     <td>Oldest received email at</td>
                     <td>{{ oldestReceivedEmailAt ? oldestReceivedEmailAt.createdAt|date('Y-m-d H:i:s') : 'N/A' }}</td>
                 </tr>

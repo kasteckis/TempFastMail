@@ -62,6 +62,15 @@ class ReceivedEmailRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function countEmailWithReadSubjects(): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->where('r.subjectReadAt IS NOT NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function countByDomain(string $domain): int
     {
         return (int) $this->createQueryBuilder('r')

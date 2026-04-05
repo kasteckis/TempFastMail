@@ -39,6 +39,7 @@ class DashboardController extends AbstractDashboardController
 
             'readEmails' => $this->receivedEmailRepository->countReadEmails(),
             'unreadEmails' => $this->receivedEmailRepository->countUnreadEmails(),
+            'emailsWithReadSubjects' => $this->receivedEmailRepository->countEmailWithReadSubjects(),
 
             'oldestReceivedEmailAt' => $this->receivedEmailRepository->findOneBy([], ['createdAt' => 'ASC']),
             'newestReceivedEmailAt' => $this->receivedEmailRepository->findOneBy([], ['createdAt' => 'DESC']),
