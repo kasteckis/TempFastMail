@@ -9,6 +9,7 @@ services:
     container_name: tempfastmail_mysql
     image: mysql:8.0
     restart: always
+    command: --skip-log-bin
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_ROOT_PASSWORD:
