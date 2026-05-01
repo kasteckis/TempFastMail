@@ -1,12 +1,14 @@
 #!/bin/sh
 set -e
 
-if [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
+if command -v composer >/dev/null 2>&1 && [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
   composer install --prefer-dist --no-progress --no-interaction
 fi
 
-npm install
-npm run build
+if command -v npm >/dev/null 2>&1; then
+  npm install
+  npm run build
+fi
 
 # Display information about the current project
 # Or about an error in project initialization
@@ -38,7 +40,8 @@ if grep -q ^DATABASE_URL= .env; then
   fi
 fi
 
-composer run-script --no-dev post-install-cmd
+php bin/console cache:clear --no-debug
+php bin/console assets:install public --no-debug
 
 echo 'PHP app ready!'
 
