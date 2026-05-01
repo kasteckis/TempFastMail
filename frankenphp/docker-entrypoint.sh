@@ -40,9 +40,8 @@ if grep -q ^DATABASE_URL= .env; then
   fi
 fi
 
-if command -v composer >/dev/null 2>&1; then
-  composer run-script --no-dev post-install-cmd
-fi
+php bin/console cache:clear --no-debug
+php bin/console assets:install public --no-debug
 
 echo 'PHP app ready!'
 
