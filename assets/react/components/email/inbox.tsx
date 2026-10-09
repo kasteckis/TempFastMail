@@ -7,6 +7,26 @@ interface Props {
   temporaryEmailBox: TemporaryEmailBox | null;
 }
 
+const SAFE_LINK_PROTOCOLS = ["http:", "https:", "mailto:"];
+
+// The email is rendered in a sandboxed iframe, so a link can't navigate the frame itself
+// (and most sites refuse to be framed anyway). Force every link to open in a new tab instead.
+const openLinksInNewTab = (doc: Document) => {
+  const base = doc.createElement("base");
+  base.target = "_blank";
+  doc.head.prepend(base);
+
+  doc.querySelectorAll<HTMLAnchorElement | HTMLAreaElement>("a[href], area[href]").forEach(link => {
+    if (!SAFE_LINK_PROTOCOLS.includes(link.protocol)) {
+      link.removeAttribute("href");
+      return;
+    }
+
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  });
+};
+
 const Inbox = ({temporaryEmailBox}: Props) => {
   const [receivedEmails, setReceivedEmails] = useState<ReceivedEmailResponseListDto[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<ReceivedEmailResponseDto | null>(null);
@@ -187,28 +207,34 @@ const Inbox = ({temporaryEmailBox}: Props) => {
 
                     <hr/>
 
-                    {/* Body — rendered in an iframe for full CSS isolation */}
+                    {/* Body — rendered in an iframe for full CSS isolation.
+                        No allow-scripts: the email can't run JS or touch our page.
+                        allow-popups(-to-escape-sandbox): links open in a normal new tab. */}
                     <iframe
                       srcDoc={selectedEmail.html}
-                      sandbox="allow-same-origin"
+                      sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"
                       style={{
                         width: "100%",
                         border: "none",
                         minHeight: "300px",
                       }}
                       onLoad={(e) => {
-                        // Auto-resize iframe to fit its content
                         const iframe = e.target as HTMLIFrameElement;
-                        const body = iframe.contentDocument?.body;
-                        if (body) {
-                          const resize = () => {
-                            iframe.style.height = body.scrollHeight + "px";
-                          };
-                          resize();
-                          // Observe size changes (e.g. images loading)
-                          const observer = new ResizeObserver(resize);
-                          observer.observe(body);
+                        const doc = iframe.contentDocument;
+                        if (!doc) {
+                          return;
                         }
+
+                        openLinksInNewTab(doc);
+
+                        // Auto-resize iframe to fit its content
+                        const resize = () => {
+                          iframe.style.height = doc.body.scrollHeight + "px";
+                        };
+                        resize();
+                        // Observe size changes (e.g. images loading)
+                        const observer = new ResizeObserver(resize);
+                        observer.observe(doc.body);
                       }}
                     />
                   </div>
