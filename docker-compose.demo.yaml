@@ -52,6 +52,8 @@ services:
       - "traefik.http.routers.tempfastmailweb.rule=Host(`tempfastmail.com`)"
       - "traefik.http.routers.tempfastmailweb.entrypoints=web"
       - "traefik.docker.network=traefik"
+    volumes:
+      - ./public/uploads:/app/public/uploads
     networks:
       - traefik
       - tempfastmail
