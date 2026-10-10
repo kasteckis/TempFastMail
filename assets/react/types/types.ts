@@ -30,3 +30,8 @@ export interface ErrorResponseDto {
   code: number;
   error: string;
 }
+
+export interface Domain {
+  domain: string;
+  premium: boolean;
+}

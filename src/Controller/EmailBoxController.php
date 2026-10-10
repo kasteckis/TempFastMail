@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\Request\CreateEmailBoxRequestDto;
 use App\DTO\Request\ValidateEmailBoxRequestDto;
 use App\DTO\Response\CreateEmailBoxResponseDto;
 use App\DTO\Response\ReceivedEmailResponseDto;
@@ -11,6 +12,7 @@ use App\Entity\TemporaryEmailBox;
 use App\Repository\TemporaryEmailBoxRepository;
 use App\Service\Client\ClientIpRetriever;
 use App\Service\Client\CloudflareCountryRetriever;
+use App\Service\Handler\Domain\ChosenDomainResolver;
 use App\Service\Handler\ReceivedEmail\ReceivedEmailsFetcher;
 use App\Service\Handler\ReceivedEmail\ReceivedEmailUpdater;
 use App\Service\Handler\TemporaryEmailBox\CreateEmailBoxHandler;
@@ -34,16 +36,24 @@ final class EmailBoxController extends AbstractController
         private TemporaryEmailBoxFetcher $temporaryEmailBoxFetcher,
         private TemporaryEmailBoxUpdater $temporaryEmailBoxUpdater,
         private CloudflareCountryRetriever $cloudflareCountryRetriever,
+        private ChosenDomainResolver $chosenDomainResolver,
     ) {
     }
 
     #[Route('/api/email-box', name: 'api_create_email_box', methods: ['POST'])]
-    public function createEmailBox(Request $request): Response
+    public function createEmailBox(
+        Request $request,
+        #[MapRequestPayload] ?CreateEmailBoxRequestDto $createEmailBoxRequestDto = null,
+    ): Response
     {
         $creatorIp = $this->clientIpRetriever->getClientIp($request);
         $countryCode = $this->cloudflareCountryRetriever->getCountryCode($request);
 
-        $emailBox = $this->createEmailBoxHandler->create($creatorIp, $countryCode);
+        $domain = $createEmailBoxRequestDto?->domain !== null
+            ? $this->chosenDomainResolver->resolve($createEmailBoxRequestDto->domain)
+            : null;
+
+        $emailBox = $this->createEmailBoxHandler->create($creatorIp, $countryCode, $domain);
 
         return $this->json(CreateEmailBoxResponseDto::fromEntity($emailBox));
     }

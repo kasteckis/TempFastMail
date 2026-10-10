@@ -2,21 +2,32 @@ import React, {useEffect, useState} from 'react';
 import Inbox from "../components/email/inbox";
 import Generator from "../components/email/generator";
 import axios from "axios";
-import {ErrorResponseDto, TemporaryEmailBox, ValidateEmailBoxResponseDto} from "../types/types";
+import {Domain, ErrorResponseDto, TemporaryEmailBox, ValidateEmailBoxResponseDto} from "../types/types";
 import {ErrorCode} from "../components/errors/ErrorCode";
 import ThereAreNoDomainsError from "../components/errors/domain/ThereAreNoDomainsError";
 
-const Application = () => {
+interface Props {
+  // Both props are always provided server-side (see HomeController).
+  // isPremium is a strict boolean (false for anonymous and regular users) and domains is empty unless premium.
+  isPremium: boolean;
+  domains: Domain[];
+}
+
+const Application = ({isPremium, domains}: Props) => {
   const [temporaryEmailBox, setTemporaryEmailBox] = useState<TemporaryEmailBox|null>(null);
   const [fatalError, setFatalError] = useState<ErrorResponseDto|null>(null);
+  const [selectedDomain, setSelectedDomain] = useState<string|null>(null);
 
-  const handleRegenerateEmail = () => {
-    axios.post('/api/email-box')
+  const handleRegenerateEmail = (domain: string|null = null) => {
+    const payload = domain !== null ? {domain: domain} : undefined;
+
+    axios.post('/api/email-box', payload)
       .then(r => {
         const generatedEmailBox = r.data as TemporaryEmailBox;
         localStorage.setItem('email', generatedEmailBox.email);
         localStorage.setItem('email-uuid', generatedEmailBox.uuid);
 
+        setFatalError(null);
         setTemporaryEmailBox(generatedEmailBox);
     })
       .catch(e => {
@@ -75,7 +86,15 @@ const Application = () => {
 
   return (
     <>
-      <Generator temporaryEmailBox={temporaryEmailBox} handleRegenerateEmail={handleRegenerateEmail}/>
+      <Generator
+        temporaryEmailBox={temporaryEmailBox}
+        handleRegenerateEmail={handleRegenerateEmail}
+        isPremium={isPremium}
+        domains={domains}
+        selectedDomain={selectedDomain}
+        onSelectedDomainChange={setSelectedDomain}
+        errorMessage={fatalError?.error ?? null}
+      />
       <Inbox temporaryEmailBox={temporaryEmailBox} />
     </>
   );

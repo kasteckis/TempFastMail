@@ -2,6 +2,7 @@
 
 namespace App\Service\Handler\TemporaryEmailBox;
 
+use App\Entity\Domain;
 use App\Entity\TemporaryEmailBox;
 use App\Exception\Domain\ThereAreNoDomainsException;
 use App\Repository\DomainRepository;
@@ -18,9 +19,13 @@ class CreateEmailBoxHandler
     ) {
     }
 
-    public function create(string $creatorIp, ?string $countryCode): TemporaryEmailBox
+    /**
+     * When no domain is given, a random active non-premium domain is used.
+     * Callers are responsible for authorizing an explicitly chosen domain.
+     */
+    public function create(string $creatorIp, ?string $countryCode, ?Domain $domain = null): TemporaryEmailBox
     {
-        $domain = $this->domainRepository->findOneActiveRandomDomain();
+        $domain ??= $this->domainRepository->findOneActiveRandomNonPremiumDomain();
 
         if ($domain === null) {
             throw new ThereAreNoDomainsException();

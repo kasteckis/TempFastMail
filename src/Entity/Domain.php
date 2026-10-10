@@ -19,6 +19,9 @@ class Domain
     #[ORM\Column]
     private ?\DateTimeImmutable $activeUntil = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $premium = false;
+
     public function __construct()
     {
         $this->activeUntil = new \DateTimeImmutable('+1 year');
@@ -49,6 +52,18 @@ class Domain
     public function setActiveUntil(\DateTimeImmutable $activeUntil): static
     {
         $this->activeUntil = $activeUntil;
+
+        return $this;
+    }
+
+    public function isPremium(): bool
+    {
+        return $this->premium;
+    }
+
+    public function setPremium(bool $premium): static
+    {
+        $this->premium = $premium;
 
         return $this;
     }

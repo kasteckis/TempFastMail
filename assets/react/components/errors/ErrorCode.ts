@@ -1,3 +1,4 @@
 export enum ErrorCode {
   THERE_ARE_NO_DOMAINS = 1001,
+  DOMAIN_NOT_AVAILABLE = 1003,
 }

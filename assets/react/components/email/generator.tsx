@@ -1,14 +1,30 @@
 import React, {useState} from "react";
-import {TemporaryEmailBox} from "../../types/types";
+import {Domain, TemporaryEmailBox} from "../../types/types";
 import copy from "copy-to-clipboard";
 
 interface Props {
   temporaryEmailBox: TemporaryEmailBox|null;
-  handleRegenerateEmail: () => void;
+  handleRegenerateEmail: (domain: string|null) => void;
+  isPremium: boolean;
+  domains: Domain[];
+  selectedDomain: string|null;
+  onSelectedDomainChange: (domain: string|null) => void;
+  errorMessage: string|null;
 }
 
-const Generator = ({temporaryEmailBox, handleRegenerateEmail}: Props) => {
+const Generator = ({
+  temporaryEmailBox,
+  handleRegenerateEmail,
+  isPremium,
+  domains,
+  selectedDomain,
+  onSelectedDomainChange,
+  errorMessage,
+}: Props) => {
   const [copied, setCopied] = useState(false);
+
+  // The domain picker is a premium-only feature; the backend enforces this as well.
+  const canChooseDomain = isPremium && domains.length > 0;
 
   const handleCopy = () => {
     if (temporaryEmailBox === null) {
@@ -20,9 +36,21 @@ const Generator = ({temporaryEmailBox, handleRegenerateEmail}: Props) => {
   }
 
   const handleRegenerateButtonPress = () => {
-    handleRegenerateEmail();
+    handleRegenerateEmail(canChooseDomain ? selectedDomain : null);
     setCopied(false);
   }
+
+  const handleDomainChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    onSelectedDomainChange(value === '' ? null : value);
+  }
+
+  const regenerateButton = (
+    <button className="button is-light" onClick={() => handleRegenerateButtonPress()}>
+      <span className="icon"><i className="fas fa-sync-alt"></i></span>
+      <span>Regenerate Email</span>
+    </button>
+  );
 
   return (
     <section className="hero is-dark">
@@ -58,13 +86,38 @@ const Generator = ({temporaryEmailBox, handleRegenerateEmail}: Props) => {
             </div>
           </div>
 
-          <div className="buttons is-centered">
-            <div className="is-inline">
-              <button className="button is-light" onClick={() => handleRegenerateButtonPress()}>
-                <span className="icon"><i className="fas fa-sync-alt"></i></span>
-                <span>Regenerate Email</span>
-              </button>
+          {errorMessage !== null && (
+            <div className="columns is-centered">
+              <div className="column is-8">
+                <div className="notification is-danger is-light has-text-centered">{errorMessage}</div>
+              </div>
             </div>
+          )}
+
+          <div className="buttons is-centered">
+            {canChooseDomain ? (
+              <div className="field is-grouped is-grouped-centered">
+                <div className="control">
+                  <div className="select">
+                    <select value={selectedDomain ?? ''} onChange={handleDomainChange} aria-label="Choose domain">
+                      <option value="">Random domain</option>
+                      {domains.map((domain) => (
+                        <option key={domain.domain} value={domain.domain}>
+                          @{domain.domain}{domain.premium ? ' (premium)' : ''}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="control">
+                  {regenerateButton}
+                </div>
+              </div>
+            ) : (
+              <div className="is-inline">
+                {regenerateButton}
+              </div>
+            )}
           </div>
 
           <div className="columns is-centered">

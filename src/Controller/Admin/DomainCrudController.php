@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Domain;
 use App\Repository\ReceivedEmailRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -32,6 +33,7 @@ class DomainCrudController extends AbstractCrudController
                     return $this->receivedEmailRepository->countByDomain($entity->getDomain());
                 }),
             DateTimeField::new('activeUntil'),
+            BooleanField::new('premium'),
         ];
     }
 }

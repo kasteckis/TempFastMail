@@ -168,4 +168,9 @@ class TemporaryEmailBox
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->email . ' (' . $this->countryCode . ')';
+    }
 }
