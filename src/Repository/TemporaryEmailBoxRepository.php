@@ -24,4 +24,19 @@ class TemporaryEmailBoxRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return list<array{countryCode: string, emailBoxCount: int|string}>
+     */
+    public function findTopCountriesByEmailBoxCount(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.countryCode AS countryCode, COUNT(t.id) AS emailBoxCount')
+            ->where('t.countryCode IS NOT NULL')
+            ->groupBy('t.countryCode')
+            ->orderBy('emailBoxCount', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

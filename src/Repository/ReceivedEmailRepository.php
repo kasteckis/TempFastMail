@@ -80,4 +80,20 @@ class ReceivedEmailRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @return list<array{countryCode: string, receivedEmailCount: int|string}>
+     */
+    public function findTopCountriesByReceivedEmailCount(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('t.countryCode AS countryCode, COUNT(r.id) AS receivedEmailCount')
+            ->innerJoin('r.temporaryEmailBox', 't')
+            ->where('t.countryCode IS NOT NULL')
+            ->groupBy('t.countryCode')
+            ->orderBy('receivedEmailCount', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

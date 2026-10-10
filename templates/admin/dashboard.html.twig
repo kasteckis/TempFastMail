@@ -63,6 +63,60 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h2 class="title">Top 5 countries by received emails</h2>
+                    <table class="table is-striped is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Country</th>
+                            <th>Received emails</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in topCountriesByReceivedEmails %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ row.countryCode }}</td>
+                                <td>{{ row.receivedEmailCount }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">N/A</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <h2 class="title">Top 5 countries by created email boxes</h2>
+                    <table class="table is-striped is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Country</th>
+                            <th>Email boxes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in topCountriesByEmailBoxes %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ row.countryCode }}</td>
+                                <td>{{ row.emailBoxCount }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">N/A</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </section>
 {% endblock page_content %}

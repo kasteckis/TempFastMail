@@ -43,6 +43,9 @@ class DashboardController extends AbstractDashboardController
 
             'oldestReceivedEmailAt' => $this->receivedEmailRepository->findOneBy([], ['createdAt' => 'ASC']),
             'newestReceivedEmailAt' => $this->receivedEmailRepository->findOneBy([], ['createdAt' => 'DESC']),
+
+            'topCountriesByReceivedEmails' => $this->receivedEmailRepository->findTopCountriesByReceivedEmailCount(),
+            'topCountriesByEmailBoxes' => $this->temporaryEmailBoxRepository->findTopCountriesByEmailBoxCount(),
         ]);
     }
 
