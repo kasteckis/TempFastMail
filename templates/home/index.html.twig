@@ -15,8 +15,6 @@
     <hr>
     {% include 'home/recent_blogs.html.twig' %}
 
-    {% if app.request.server.get('DISPLAY_FAQ_ON_HOMEPAGE')|lower == 'true' %}
-        <hr>
-        {% include 'components/faq.html.twig' %}
-    {% endif %}
+    <hr>
+    {% include 'components/faq.html.twig' %}
 {% endblock %}
