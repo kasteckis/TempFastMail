@@ -9,6 +9,8 @@ use App\Repository\TemporaryEmailBoxRepository;
 
 class ReceivedEmailFactory
 {
+    private const int SUBJECT_MAX_LENGTH = 1000;
+
     public function __construct(
         private TemporaryEmailBoxRepository $temporaryEmailBoxRepository,
     ) {
@@ -21,7 +23,7 @@ class ReceivedEmailFactory
         $email
             ->setRealFrom($dto->real_from)
             ->setRealTo($dto->real_to)
-            ->setSubject($dto->subject)
+            ->setSubject($this->truncateSubject($dto->subject))
             ->setFromName($dto->from_name)
             ->setFromAddress($dto->from_address)
             ->setToMultiple($dto->to_multiple ?? [])
@@ -37,5 +39,14 @@ class ReceivedEmailFactory
         }
 
         return $email;
+    }
+
+    private function truncateSubject(?string $subject): ?string
+    {
+        if ($subject === null) {
+            return null;
+        }
+
+        return mb_substr($subject, 0, self::SUBJECT_MAX_LENGTH);
     }
 }

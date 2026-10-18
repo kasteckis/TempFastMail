@@ -22,7 +22,7 @@ class ReceivedEmail
     #[ORM\Column(length: 255)]
     private string $realTo;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $subject = null;
 
     #[ORM\Column(length: 255, nullable: true)]
