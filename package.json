@@ -1,19 +1,23 @@
 {
     "devDependencies": {
-        "@babel/core": "^7.17.0",
-        "@babel/preset-env": "^7.16.0",
-        "@babel/preset-react": "^7.28.5",
+        "@babel/core": "^8.0.7",
+        "@babel/preset-env": "^8.0.7",
+        "@babel/preset-react": "^8.0.1",
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.2.0 || ^4.0.0",
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
-        "@symfony/webpack-encore": "^5.1.0",
+        "@symfony/webpack-encore": "^7.2.0",
+        "babel-plugin-polyfill-corejs3": "^1.0.0",
         "core-js": "^3.38.0",
+        "cssnano": "^9.9.0",
+        "postcss": "^8.5.31",
         "react": "^18.0",
         "react-dom": "^18.0",
         "regenerator-runtime": "^0.13.9",
-        "ts-loader": "^9.5.4",
+        "ts-loader": "^9.6.2",
+        "typescript": "^5.9.3",
         "webpack": "^5.74.0",
-        "webpack-cli": "^5.1.0"
+        "webpack-cli": "^7.2.3"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -25,8 +29,11 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.1.0",
-        "axios": "^1.13.2",
+        "axios": "^1.20.0",
         "bulma": "^1.0.4",
-        "react-use": "^17.6.0"
-    }
+        "react-use": "^17.6.1"
+    },
+    "browserslist": [
+        "defaults"
+    ]
 }
