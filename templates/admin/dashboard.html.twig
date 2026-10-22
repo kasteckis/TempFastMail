@@ -1,6 +1,6 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
 
-{% block page_content %}
+{% block main %}
     {% for message in app.flashes('notice') %}
         <div class="flash-notice">
             {{ message }}
@@ -119,4 +119,4 @@
             </div>
         </div>
     </section>
-{% endblock page_content %}
+{% endblock main %}

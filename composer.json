@@ -13,7 +13,7 @@
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.6",
-        "easycorp/easyadmin-bundle": "^4.29.16",
+        "easycorp/easyadmin-bundle": "^5.7",
         "fakerphp/faker": "^1.24",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.3",

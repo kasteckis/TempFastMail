@@ -2,11 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Blog;
-use App\Entity\Domain;
-use App\Entity\ReceivedEmail;
-use App\Entity\TemporaryEmailBox;
-use App\Entity\User;
 use App\Repository\DomainRepository;
 use App\Repository\ReceivedEmailRepository;
 use App\Repository\TemporaryEmailBoxRepository;
@@ -60,11 +55,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fas fa-home');
-        yield MenuItem::linkToCrud('Domains', 'fas fa-globe', Domain::class);
-        yield MenuItem::linkToCrud('Blog Posts', 'fas fa-pen', Blog::class);
+        yield MenuItem::linkTo(DomainCrudController::class, 'Domains', 'fas fa-globe');
+        yield MenuItem::linkTo(BlogCrudController::class, 'Blog Posts', 'fas fa-pen');
         yield MenuItem::section('Users data');
-        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Temporary Email Boxes', 'fas fa-paper-plane', TemporaryEmailBox::class);
-        yield MenuItem::linkToCrud('Received Emails', 'fas fa-envelope', ReceivedEmail::class);
+        yield MenuItem::linkTo(UserCrudController::class, 'Users', 'fas fa-user');
+        yield MenuItem::linkTo(TemporaryEmailBoxCrudController::class, 'Temporary Email Boxes', 'fas fa-paper-plane');
+        yield MenuItem::linkTo(ReceivedEmailCrudController::class, 'Received Emails', 'fas fa-envelope');
     }
 }
