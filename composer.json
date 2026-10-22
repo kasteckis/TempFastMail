@@ -6,21 +6,21 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.4.16",
+        "php": ">=8.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.6",
-        "easycorp/easyadmin-bundle": "^4.27",
+        "easycorp/easyadmin-bundle": "^4.29.16",
         "fakerphp/faker": "^1.24",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.3",
         "sentry/sentry-symfony": "^5.8",
         "symfony/console": "7.4.*",
         "symfony/dotenv": "7.4.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.11",
         "symfony/framework-bundle": "7.4.*",
         "symfony/property-access": "7.4.*",
         "symfony/property-info": "7.4.*",
@@ -28,8 +28,8 @@
         "symfony/security-bundle": "7.4.*",
         "symfony/serializer": "7.4.*",
         "symfony/twig-bundle": "7.4.*",
-        "symfony/ux-react": "^2.31",
-        "symfony/webpack-encore-bundle": "^2.4",
+        "symfony/ux-react": "^2.36",
+        "symfony/webpack-encore-bundle": "^2.4.2",
         "symfony/yaml": "7.4.*"
     },
     "config": {
@@ -84,7 +84,7 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.65",
+        "symfony/maker-bundle": "^1.68",
         "symfony/stopwatch": "7.4.*",
         "symfony/web-profiler-bundle": "7.4.*"
     }
