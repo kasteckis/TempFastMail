@@ -31,6 +31,7 @@
         "@fortawesome/fontawesome-free": "^7.1.0",
         "axios": "^1.20.0",
         "bulma": "^1.0.4",
+        "centrifuge": "^5.8.0",
         "react-use": "^17.6.1"
     },
     "browserslist": [

@@ -47,5 +47,19 @@ services:
     volumes:
       - volume_database_tempfastmail:/var/lib/mysql
 
+  centrifugo:
+    container_name: tempfastmail_centrifugo
+    image: centrifugo/centrifugo:v6
+    restart: unless-stopped
+    environment:
+      CENTRIFUGO_HTTP_API_KEY: ${CENTRIFUGO_API_KEY:-change-this-to-a-random-value}
+      CENTRIFUGO_CLIENT_ALLOWED_ORIGINS: ${CENTRIFUGO_ALLOWED_ORIGINS:-http://localhost}
+      CENTRIFUGO_CLIENT_ALLOW_ANONYMOUS_CONNECT_WITHOUT_TOKEN: "true"
+      CENTRIFUGO_CHANNEL_NAMESPACES: '[{"name":"email-box","presence":true,"allow_subscribe_for_client":true,"allow_subscribe_for_anonymous":true}]'
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+
 volumes:
   volume_database_tempfastmail:

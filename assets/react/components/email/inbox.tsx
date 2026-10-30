@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {ReceivedEmailResponseDto, ReceivedEmailResponseListDto, TemporaryEmailBox} from "../../types/types";
 import axios from "axios";
 import {useInterval} from "react-use";
+import {Centrifuge} from "centrifuge";
 
 interface Props {
   temporaryEmailBox: TemporaryEmailBox | null;
@@ -62,6 +63,24 @@ const Inbox = ({temporaryEmailBox}: Props) => {
   useEffect(() => {
     fetchEmails();
   }, [temporaryEmailBox])
+
+  useEffect(() => {
+    if (temporaryEmailBox === null) {
+      return;
+    }
+
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const centrifuge = new Centrifuge(protocol + "://" + window.location.host + "/connection/websocket");
+    const subscription = centrifuge.newSubscription('email-box:' + temporaryEmailBox.uuid);
+
+    subscription.on('publication', fetchEmails);
+    subscription.subscribe();
+    centrifuge.connect();
+
+    return () => {
+      centrifuge.disconnect();
+    };
+  }, [temporaryEmailBox]);
 
   return (
     <section className="section">
