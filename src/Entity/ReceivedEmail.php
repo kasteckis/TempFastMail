@@ -9,6 +9,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ReceivedEmailRepository::class)]
 #[ORM\Index(name: 'idx_real_to', columns: ['real_to'])]
+#[ORM\Index(name: 'idx_created_at', columns: ['created_at'])]
 class ReceivedEmail
 {
     #[ORM\Id]
