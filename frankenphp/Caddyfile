@@ -37,8 +37,11 @@
 	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
 	header ?Permissions-Policy "browsing-topics=()"
 
+	reverse_proxy /connection/* {$CENTRIFUGO_UPSTREAM:centrifugo:8000}
+
 	@phpRoute {
 		not file {path}
+		not path /connection/*
 	}
 	rewrite @phpRoute index.php
 
