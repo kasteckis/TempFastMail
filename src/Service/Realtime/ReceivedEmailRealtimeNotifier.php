@@ -31,10 +31,11 @@ class ReceivedEmailRealtimeNotifier
 
             $this->centrifugoClient->publish($channel, ['uuid' => $receivedEmail->getUuid()]);
         } catch (\Throwable $exception) {
-            $this->logger->error('Failed to notify Centrifugo about received email', [
-                'channel' => $channel,
-                'exception' => $exception,
-            ]);
+            $this->logger->error(sprintf(
+                'Failed to notify Centrifugo about received email on channel %s: %s',
+                $channel,
+                $exception->getMessage(),
+            ), ['exception' => $exception]);
         }
     }
 }
