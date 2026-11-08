@@ -3,8 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Temp Fast Mail{% endblock %}</title>
-        <link rel="icon" href="/favicon.png" type="image/x-icon" />
+        {% set pageTitle %}{% block title %}Temp Fast Mail{% endblock %}{% endset %}
+        {% set pageDescription %}{% block meta_description %}Get a free temporary email address in one click. No sign up, instant inbox and every email is auto-deleted after 48 hours. Open source and self-hostable.{% endblock %}{% endset %}
+        {% set canonicalUrl %}{% block canonical %}{{ site_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}{% endblock %}{% endset %}
+        {% set ogImage %}{% block og_image %}{{ site_url(asset('images/og-image.png')) }}{% endblock %}{% endset %}
+        <title>{{ pageTitle }}</title>
+        <meta name="description" content="{{ pageDescription }}">
+        {% block robots %}{% endblock %}
+        <link rel="canonical" href="{{ canonicalUrl }}">
+        <meta property="og:site_name" content="Temp Fast Mail">
+        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+        <meta property="og:title" content="{{ pageTitle }}">
+        <meta property="og:description" content="{{ pageDescription }}">
+        <meta property="og:url" content="{{ canonicalUrl }}">
+        <meta property="og:image" content="{{ ogImage }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ pageTitle }}">
+        <meta name="twitter:description" content="{{ pageDescription }}">
+        <meta name="twitter:image" content="{{ ogImage }}">
+        <link rel="icon" href="/favicon.ico" sizes="32x32">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="theme-color" content="#2a9333">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -12,6 +33,8 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
+        {% block structured_data %}{% endblock %}
 
         {% set posthogToken = app.request.server.get('POSTHOG_TOKEN') %}
         {% set posthogApiHost = app.request.server.get('POSTHOG_API_HOST') %}

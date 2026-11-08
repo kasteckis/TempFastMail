@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blogs - Temp Fast Mail{% endblock %}
+{% block title %}{% if page > 1 %}Temporary Email Blog - Page {{ page }} - Temp Fast Mail{% else %}Temporary Email Blog: Privacy Tips and Spam Fixes - Temp Fast Mail{% endif %}{% endblock %}
+
+{% block meta_description %}Guides on email privacy, stopping spam and using disposable temporary inboxes safely, written by the open source Temp Fast Mail team.{% endblock %}
+
+{% block canonical %}{{ site_url(path('app_blog', page > 1 ? {page: page} : {})) }}{% endblock %}
 
 {% block body %}
     <section id="blog" class="section">
         <div class="container">
-            <h2 class="title is-3 has-text-centered">Blog</h2>
+            <h1 class="title is-3 has-text-centered">The Temporary Email Blog: Privacy Tips, Spam Fixes and Disposable Inbox Guides</h1>
             <div class="columns is-multiline">
                 {% for blog in blogs %}
                     <div class="column is-12-mobile is-6-tablet is-6-desktop">

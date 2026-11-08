@@ -2,6 +2,49 @@
 
 {% block title %}{{ blog.title }} - Temp Fast Mail{% endblock %}
 
+{% block meta_description %}{{ blog.excerpt }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+
+{% block og_image %}{% if blog.photo %}{{ site_url(asset('uploads/images/blogs/' ~ blog.photo)) }}{% else %}{{ parent() }}{% endif %}{% endblock %}
+
+{% block structured_data %}
+    {% set homeUrl = site_url(path('app_home')) %}
+    {% set publisher = {
+        '@type': 'Organization',
+        name: 'Temp Fast Mail',
+        url: homeUrl,
+        logo: {'@type': 'ImageObject', url: site_url('/icons/icon-512.png')},
+    } %}
+    {% set posting = {
+        '@type': 'BlogPosting',
+        headline: blog.title,
+        description: blog.excerpt,
+        datePublished: blog.createdAt|date('c'),
+        dateModified: blog.createdAt|date('c'),
+        author: publisher,
+        publisher: publisher,
+        mainEntityOfPage: {'@type': 'WebPage', '@id': site_url(path('app_view_single_blog', {slug: blog.slug}))},
+    } %}
+    {% if blog.photo %}
+        {% set posting = posting|merge({image: [site_url(asset('uploads/images/blogs/' ~ blog.photo))]}) %}
+    {% endif %}
+    <script type="application/ld+json">{{ {
+        '@context': 'https://schema.org',
+        '@graph': [
+            posting,
+            {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                    {'@type': 'ListItem', position: 1, name: 'Home', item: homeUrl},
+                    {'@type': 'ListItem', position: 2, name: 'Blog', item: site_url(path('app_blog'))},
+                    {'@type': 'ListItem', position: 3, name: blog.title},
+                ],
+            },
+        ],
+    }|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_UNESCAPED_SLASHES'))|raw }}</script>
+{% endblock %}
+
 {% block body %}
     <section class="hero is-primary is-small">
         <div class="hero-body">

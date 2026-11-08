@@ -1,86 +1,104 @@
+{% set answerWhatIsIt %}
+    <p>
+        Temp Fast Mail is a free temporary email service. Open this page and you instantly get a disposable
+        email address that receives messages in real time. There is no registration, no password and nothing
+        to install. The whole project is open source, so anyone can read the code or run their own copy.
+    </p>
+{% endset %}
+
+{% set answerHowItWorks %}
+    <p>
+        A temporary email address is a real inbox with a short life. Use it wherever a website asks for an
+        email, then read the confirmation or verification message right here on this page. New messages show up
+        automatically through a live connection, so you never need to refresh. When you are done, click
+        Regenerate Email and you get a brand new address.
+    </p>
+{% endset %}
+
+{% set answerRetention %}
+    <p>
+        Every inbox and every email is deleted automatically 48 hours after it was received. Nothing is archived
+        and nothing is kept after that window. If you need something from a message, save it before the 48 hours
+        run out.
+    </p>
+{% endset %}
+
+{% set answerPrivacy %}
+    <p>
+        You can use the service without creating an account, so there is no name, password or real email to hand
+        over. Addresses are random and unique, and all inboxes are wiped after 48 hours. The source code is public
+        on <a href="https://github.com/kasteckis/tempfastmail" target="_blank" rel="noopener">GitHub</a>, so you
+        can check exactly what the service does with your data instead of taking our word for it.
+    </p>
+{% endset %}
+
+{% set answerWhenToUse %}
+    <p>A disposable address is the right tool whenever an email is required but a relationship is not:</p>
+    <ul>
+        <li>Forums, newsletters and downloads that demand an email before you can continue.</li>
+        <li>Free trials and one-time offers you do not want tied to your main inbox.</li>
+        <li>Testing your own app or website with fresh accounts.</li>
+        <li>Shopping at a store you will probably never visit again.</li>
+        <li>Keeping your real address out of databases that might leak one day.</li>
+    </ul>
+{% endset %}
+
+{% set answerWhenNotToUse %}
+    <p>
+        Do not use a temporary address for anything you need to get back into later. Bank accounts, government
+        services, your main social media profiles and anything with payments or password resets belong on an
+        address you control for years, not for 48 hours.
+    </p>
+{% endset %}
+
+{% set answerRejected %}
+    <p>
+        Some services block known disposable domains to cut down on fake sign-ups. If an address gets rejected,
+        click Regenerate Email and try again with a new one. It also helps to complete the sign-up quickly, since
+        the inbox only lives for 48 hours.
+    </p>
+{% endset %}
+
+{% set answerSelfHost %}
+    <p>
+        Yes. Temp Fast Mail ships as a Docker image and receives mail through a free Cloudflare Email Worker, so
+        you can run it on your own domain in a few minutes. The setup guide and the full source code are on
+        <a href="https://github.com/kasteckis/tempfastmail" target="_blank" rel="noopener">GitHub</a>.
+    </p>
+{% endset %}
+
+{% set faqs = [
+    {question: 'What is Temp Fast Mail?', answer: answerWhatIsIt},
+    {question: 'How does a temporary email address work?', answer: answerHowItWorks},
+    {question: 'How long are my emails kept?', answer: answerRetention},
+    {question: 'Is Temp Fast Mail private and safe?', answer: answerPrivacy},
+    {question: 'When should I use a disposable email address?', answer: answerWhenToUse},
+    {question: 'When should I not use a temporary email?', answer: answerWhenNotToUse},
+    {question: 'Why do some websites reject temporary email addresses?', answer: answerRejected},
+    {question: 'Can I run Temp Fast Mail myself?', answer: answerSelfHost},
+] %}
+
 <section class="section pt-0">
     <div class="container">
         <div class="columns is-centered">
             <div class="column is-8">
-                <h2 class="title is-4">What is Temporary Fast Email Box?</h2>
-                <p>
-                    A <b>temporary fast email box</b> is a free service that lets you receive messages at a temporary address, which is automatically deleted after a set time. It is also called tempmail, 10minutemail, 10minmail, throwaway email, fake mail, fake email generator, burner mail, or trash mail. Many websites, forums, blogs, and public Wi-Fi networks require users to register before viewing content, posting comments, or downloading files. Temp-Mail is a leading throwaway email service that helps you avoid spam and keep your inbox safe.
-                </p>
+                <h2 class="title is-3 has-text-centered">Frequently asked questions</h2>
 
-                <h2 class="title is-4 mt-3">How we handle privacy?</h2>
-                <p>
-                    We handle privacy very seriously. You can access your received emails for up to 48 hours, because all received emails are <b>deleted within 48 hours</b>.
-                    All generated email addresses are randomly generated and unique. Your data is safe with us.
-                    Our source code is open for review on <a href="https://github.com/kasteckis/tempfastmail" target="_blank">GitHub</a> for audit.
-                </p>
-
-                <h2 class="title is-4 mt-3">The Technology Behind Disposable Email Addresses</h2>
-                <p>
-                    Everyone uses an email address every day for work, business contacts, and personal communication. Almost every app and online service today requires an email address. Many stores, contests, loyalty programs, and websites also ask users to register before accessing content, posting comments, or downloading files.
-                </p>
-                <p>
-                    While having an email address is useful, receiving large amounts of spam can be frustrating. Databases from online stores can be hacked, putting your real email at risk. Online activity is never completely private, so protecting your email with a disposable address is the safest approach.
-                </p>
-
-                <h2 class="title is-4 mt-3">What is a Disposable Email Address?</h2>
-                <p>
-                    Disposable email addresses are temporary emails that allow users to sign up for websites and services without revealing their real identity. These addresses can receive emails for a limited time and are automatically deleted afterwards.
-                </p>
-                <p>
-                    Using a disposable email prevents you from being tied to online abuse or spam. You can receive messages at the temporary address and forward important emails to your real inbox. Once the temporary address is no longer needed, it self-destructs.
-                </p>
-
-                <h2 class="title is-4 mt-3">Why Use a Fake Email Address?</h2>
-                <p>
-                    Many services like Amazon Prime, Hulu, or Netflix offer trial periods. With disposable emails, you can test multiple trials without using your real email. Online retailers often require an email to access promotions, which can result in spam. Temporary emails help avoid these unwanted messages.
-                </p>
-                <p>
-                    Although disposable emails are sometimes associated with hackers, there are many legitimate reasons to use them:
-                </p>
-
-                <ul>
-                    <li>
-                        <strong>Sign Up for Store Loyalty Cards:</strong> Avoid promotional emails from stores while keeping your real email safe if their database is hacked.
-                    </li>
-                    <li>
-                        <strong>Test Your App:</strong> Create temporary accounts to test web apps without exposing your main email or hiring testers.
-                    </li>
-                    <li>
-                        <strong>Create Multiple Accounts:</strong> For services like IFTTT or social media, use a disposable email for secondary accounts.
-                    </li>
-                    <li>
-                        <strong>Reduce Spam:</strong> Minimize spam when signing up for forums, discussions, or online forms.
-                    </li>
-                </ul>
-
-                <h2 class="title is-4 mt-3">How to Choose a Disposable Email</h2>
-                <p>
-                    A good disposable email service should:
-                </p>
-                <ul class="ml-5" style="list-style-type: disc;">
-                    <li>Should be open source. You can view code of this website <a href="https://github.com/kasteckis/tempfastmail" target="_blank">here</a></li>
-                    <li>Allow creating temporary addresses with one click</li>
-                    <li>Require no registration or personal information</li>
-                    <li>Keep email addresses anonymous</li>
-                    <li>Provide multiple temporary emails if needed</li>
-                    <li>Offer a simple, functional interface</li>
-                    <li>Give the option to forward messages to your real inbox</li>
-                </ul>
-
-                <p>
-                    Stay spam-free and save time with <a href="{{ app.request.server.get('DEFAULT_URI') }}" target="_blank">{{ app.request.server.get('DEFAULT_URI')|domain }}</a>.
-                </p>
-
-                <h2 class="title is-4 mt-3">How to Use a Disposable Email Address</h2>
-                <p>
-                    Users can create a temporary email account that forwards messages to their real inbox. If the disposable address is compromised, suspicious emails can be discarded without affecting your main account. This is perfect for testing, signing up for multiple services, or keeping your inbox clean.
-                </p>
-
-                <h2 class="title is-4 mt-3">Conclusion</h2>
-                <p>
-                    Using disposable emails protects your identity when participating in online forums, chats, or file-sharing platforms. Keep your real email private, avoid spam, and stay safe with <a href="{{ app.request.server.get('DEFAULT_URI') }}" target="_blank">{{ app.request.server.get('DEFAULT_URI')|domain }}</a>.
-                </p>
+                {% for faq in faqs %}
+                    <h3 class="title is-4 mt-5">{{ faq.question }}</h3>
+                    <div class="content">{{ faq.answer }}</div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
+
+<script type="application/ld+json">{{ {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs|map(faq => {
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {'@type': 'Answer', text: faq.answer|trim},
+    }),
+}|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_UNESCAPED_SLASHES'))|raw }}</script>

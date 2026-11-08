@@ -28,6 +28,7 @@
         "symfony/runtime": "7.4.*",
         "symfony/security-bundle": "7.4.*",
         "symfony/serializer": "7.4.*",
+        "symfony/string": "7.4.*",
         "symfony/twig-bundle": "7.4.*",
         "symfony/ux-react": "^2.36",
         "symfony/webpack-encore-bundle": "^2.4.2",

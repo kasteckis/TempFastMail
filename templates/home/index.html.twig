@@ -2,14 +2,68 @@
 
 {% block title %}Temp Fast Mail - Disposable Temporary Email{% endblock %}
 
+{% block meta_description %}Get a free temporary email address in one click. No sign up, instant inbox and every email is auto-deleted after 48 hours. Open source and self-hostable.{% endblock %}
+
+{% block structured_data %}
+    {% set homeUrl = site_url(path('app_home')) %}
+    <script type="application/ld+json">{{ {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'Organization',
+                '@id': homeUrl ~ '#organization',
+                name: 'Temp Fast Mail',
+                url: homeUrl,
+                logo: site_url('/icons/icon-512.png'),
+                sameAs: ['https://github.com/kasteckis/tempfastmail'],
+            },
+            {
+                '@type': 'WebSite',
+                '@id': homeUrl ~ '#website',
+                url: homeUrl,
+                name: 'Temp Fast Mail',
+                publisher: {'@id': homeUrl ~ '#organization'},
+            },
+            {
+                '@type': 'WebApplication',
+                name: 'Temp Fast Mail',
+                url: homeUrl,
+                description: block('meta_description'),
+                applicationCategory: 'UtilitiesApplication',
+                operatingSystem: 'Any',
+                browserRequirements: 'Requires JavaScript',
+                isAccessibleForFree: true,
+                offers: {'@type': 'Offer', price: '0', priceCurrency: 'USD'},
+                publisher: {'@id': homeUrl ~ '#organization'},
+            },
+        ],
+    }|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_UNESCAPED_SLASHES'))|raw }}</script>
+{% endblock %}
+
 {% block body %}
-    <div {{ react_component('Application', { isPremium: isPremium, domains: domains }) }}>
-        <div class="is-flex is-justify-content-center is-align-items-center is-fullheight">
-            <div class="has-text-centered">
-                <p>Loading...</p>
-                <i class="fas fa-cog fa-spin fa-3x"></i>
+    <section class="hero is-dark">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-5 has-text-centered has-text-white mb-4">Your Temporary Email Address</h1>
+
+                <div {{ react_component('EmailGenerator', { isPremium: isPremium, domains: domains }) }}>
+                    {% include 'home/generator_placeholder.html.twig' %}
+                </div>
+
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <p class="has-text-centered has-text-white is-size-6">
+                            No more spam, marketing emails, or hacker attacks. Keep your real mailbox safe and
+                            tidy with Temp Fast Mail, a free, temporary, anonymous, and secure email address.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <div {{ react_component('EmailInbox') }}>
+        {% include 'home/inbox_placeholder.html.twig' %}
     </div>
 
     <hr>

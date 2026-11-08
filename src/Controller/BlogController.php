@@ -29,11 +29,17 @@ final class BlogController extends AbstractController
         $page = 0 >= $page ? 1 : $page;
         $offset = ($page - 1) * $blogsPerPage;
 
+        $pages = (int) ceil($this->blogRepository->count() / $blogsPerPage);
+
+        if ($pages > 0 && $page > $pages) {
+            throw new NotFoundHttpException();
+        }
+
         $blogs = $this->blogRepository->findWithOffsetAndLimit($offset, $blogsPerPage);
 
         return $this->render('blog/index.html.twig', [
             'blogs' => $blogs,
-            'pages' => ceil($this->blogRepository->count() / $blogsPerPage),
+            'pages' => $pages,
             'page' => $page,
         ]);
     }

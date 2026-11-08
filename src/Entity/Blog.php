@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BlogRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\TruncateMode;
+use function Symfony\Component\String\u;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
 class Blog
@@ -88,6 +90,14 @@ class Blog
         $this->shortDescription = $shortDescription;
 
         return $this;
+    }
+
+    public function getExcerpt(int $maxLength = 155): string
+    {
+        return u(html_entity_decode(strip_tags((string) $this->shortDescription)))
+            ->collapseWhitespace()
+            ->truncate($maxLength, '...', TruncateMode::WordBefore)
+            ->toString();
     }
 
     public function getDescription(): ?string
