@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Not Found - Temp Fast Mail{% endblock %}
+
+{% block meta_description %}This page does not exist or has been removed. Head back to Temp Fast Mail and get a free temporary email address in one click.{% endblock %}
+
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+
+{% block canonical %}{{ site_url(path('app_home')) }}{% endblock %}
+
+{% block body %}
+    <section class="hero is-dark is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <span class="icon is-large mb-4">
+                    <i class="fas fa-envelope-open fa-3x has-text-primary"></i>
+                </span>
+                <p class="title has-text-white mb-2" style="font-size: 5rem; line-height: 1;">404</p>
+                <h1 class="title is-3 has-text-white">Page not found</h1>
+
+                <div class="columns is-centered">
+                    <div class="column is-7">
+                        <p class="has-text-white is-size-5">
+                            The address you followed does not exist or has been removed.
+                            Like every inbox here, some things do not last forever.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="buttons is-centered mt-4">
+                    <a class="button is-primary is-medium" href="{{ path('app_home') }}">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span>Back to Home</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
