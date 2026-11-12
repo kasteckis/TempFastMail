@@ -1,1 +1,15 @@
-{{ html|raw }}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer">
+    {# Render the untrusted email HTML inside a sandboxed iframe WITHOUT allow-scripts (matching the
+       React inbox view) so an email body cannot run JavaScript in this admin, same-origin session.
+       The CSP is defence-in-depth. #}
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src 'self'; img-src data: https: http:; style-src 'unsafe-inline' data: https: http:; font-src data: https: http:">
+    <style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100vh;display:block}</style>
+</head>
+<body>
+    <iframe sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox" srcdoc="{{ html|e("html_attr") }}"></iframe>
+</body>
+</html>
