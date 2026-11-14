@@ -1,0 +1,82 @@
+networks:
+    traefik:
+        external: true
+    tempfastmail:
+        driver: bridge
+
+services:
+    mysql:
+        container_name: tempfastmail_mysql
+        image: mysql:8.0
+        restart: always
+        command: --skip-log-bin
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+            MYSQL_ROOT_PASSWORD:
+            MYSQL_DATABASE: project
+            MYSQL_USER: project
+            MYSQL_PASSWORD: project
+        volumes:
+            - volume_database_tempfastmail:/var/lib/mysql
+        networks:
+            - tempfastmail
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: tempfastmail_phpmyadmin
+        restart: always
+        links:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+            UPLOAD_LIMIT: 2000M
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.tempfastmailphpmyadmin.rule=Host(`phpmyadmin.tempfastmail.com`)"
+            - "traefik.http.routers.tempfastmailphpmyadmin.entrypoints=websecure"
+            - "traefik.http.routers.tempfastmailphpmyadmin.tls=true"
+            - "traefik.http.routers.tempfastmailphpmyadmin.tls.certresolver=letsencrypt"
+            - "traefik.docker.network=traefik"
+        networks:
+            - traefik
+            - tempfastmail
+
+    php:
+        container_name: tempfastmail_php
+        build:
+            context: .
+            target: frankenphp_prod
+        restart: always
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.tempfastmailweb.rule=Host(`tempfastmail.com`)"
+            - "traefik.http.routers.tempfastmailweb.entrypoints=websecure"
+            - "traefik.http.routers.tempfastmailweb.tls=true"
+            - "traefik.http.routers.tempfastmailweb.tls.certresolver=letsencrypt"
+            - "traefik.docker.network=traefik"
+        volumes:
+            - ./public/uploads:/app/public/uploads
+        networks:
+            - traefik
+            - tempfastmail
+
+    centrifugo:
+        container_name: tempfastmail_centrifugo
+        image: centrifugo/centrifugo:v6
+        restart: always
+        environment:
+            CENTRIFUGO_HTTP_API_KEY: ${CENTRIFUGO_API_KEY}
+            CENTRIFUGO_CLIENT_ALLOWED_ORIGINS: https://tempfastmail.com
+            CENTRIFUGO_CLIENT_ALLOW_ANONYMOUS_CONNECT_WITHOUT_TOKEN: "true"
+            CENTRIFUGO_CHANNEL_NAMESPACES: '[{"name":"email-box","presence":true,"allow_subscribe_for_client":true,"allow_subscribe_for_anonymous":true}]'
+        ulimits:
+            nofile:
+                soft: 65535
+                hard: 65535
+        networks:
+            - tempfastmail
+
+volumes:
+    volume_database_tempfastmail:
