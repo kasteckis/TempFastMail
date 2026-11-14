@@ -52,6 +52,16 @@
                 })
             </script>
         {% endif %}
+
+        {% set googleAnalyticsId = app.request.server.get('GOOGLE_ANALYTICS_ID') %}
+        {% if googleAnalyticsId %}
+            <script async src="https://www.googletagmanager.com/gtm.js?id={{ googleAnalyticsId|url_encode }}"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+            </script>
+        {% endif %}
     </head>
     <body>
     {% include 'navbar.html.twig' %}
